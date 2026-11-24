@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дожми сегодня — 5 сделок на сегодня</title>
+<meta name="description" content="Инструмент отдела продаж «Идеальный турник»: выгрузка CSV листа «Сделки» + дата → 5 сделок с действием на сегодня. Работает по правилам компании, без нейросети.">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="granite-veil" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="assets/logo.svg" alt="Логотип «Идеальный турник»" class="brand-logo" width="56" height="56">
+    <div class="brand-text">
+      <span class="brand-name">Идеальный турник</span>
+      <span class="brand-tag">всё для спорта · диспетчер сделок</span>
+    </div>
+  </div>
+  <div class="topbar-meta">
+    <span class="chip chip-steel">Тестовый стенд</span>
+    <span class="chip">только правила · без нейросети</span>
+  </div>
+</header>
+
+<main class="shell">
+
+  <div class="shell-main">
+
+  <section class="panel panel-controls" aria-labelledby="controls-title">
+    <h1 class="panel-title" id="controls-title">Что нужно сделать</h1>
+    <p class="panel-sub">
+      Кнопка читает лист «Сделки» прямо из Google-таблицы.
+      Добавили новые сделки&nbsp;&mdash; нажмите ещё раз, выборка пересчитается по всему документу.
+    </p>
+
+    <div class="btn-row center">
+      <button id="load" class="btn btn-primary btn-two-thirds">Загрузить/обновить CSV</button>
+    </div>
+
+    <div id="file-status" class="file-status" hidden>
+      <span id="file-name" class="file-name"></span>
+      <button id="pick-file" class="btn btn-quiet btn-tiny" hidden>Выбрать файл</button>
+    </div>
+    <input type="file" id="file" accept=".csv,text/csv,text/plain" hidden>
+
+    <div class="field-row">
+      <label class="field field-date">
+        <span class="field-label">Дата «Сегодня»</span>
+        <input type="date" id="today">
+      </label>
+      <label class="field field-plan">
+        <span class="field-label">До плана месяца, ₽</span>
+        <input type="text" id="plan" inputmode="numeric" placeholder="1 550 000">
+      </label>
+    </div>
+
+    <div class="btn-row center">
+      <button id="run" class="btn btn-primary btn-two-thirds" disabled>Показать 5 сделок</button>
+    </div>
+
+    <div class="btn-row center">
+      <button id="reset" class="btn btn-quiet">Сбросить</button>
+    </div>
+  </section>
+
+  <section class="panel panel-results" aria-labelledby="results-title">
+    <div class="print-head" id="print-head">
+      <span class="print-title">Идеальный турник · что нужно сделать</span>
+      <span class="print-date" id="print-date"></span>
+    </div>
+
+    <div class="results-head">
+      <h2 class="panel-title" id="results-title">Пятёрка на сегодня</h2>
+      <span id="counter" class="counter"></span>
+    </div>
+
+    <div id="list" class="list">
+      <div class="empty">
+        <div class="empty-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="72" height="72" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M8 40h48M8 24h48"/><circle cx="16" cy="32" r="8"/><circle cx="48" cy="32" r="8"/><path d="M24 32h16"/></svg>
+        </div>
+        <p>Пока пусто. Нажмите «Загрузить/обновить CSV» и выберите файл из листа «Сделки».</p>
+      </div>
+    </div>
+
+    <div id="summary" class="summary" hidden>
+      <div class="summary-line">
+        <span id="summary-nums" class="summary-nums"></span>
+      </div>
+      <div class="summary-actions">
+        <button id="print" class="btn btn-mini">Отправить на принтер</button>
+      </div>
+    </div>
+
+    <div id="others" class="others" hidden></div>
+  </section>
+
+  </div>
+
+  <details class="rules">
+    <summary>Как программа выбирает сделки</summary>
+    <div class="rules-body">
+      <p>Никакой нейросети во время работы. Только фиксированные правила, одинаковые на всех выгрузках.</p>
+
+      <h3>Правила компании (из листа «Правила»)</h3>
+      <ul>
+        <li><b>Оплата.</b> Юрлица и физлица — 100% предоплата. Отсрочка только госзаказчику по контракту. Просят отсрочку не-госзаказчик — сделка уходит в «нужно решение руководителя».</li>
+        <li><b>Скидка.</b> Менеджер волен дать до 7%. Больше — только с согласия руководителя: сделка с просьбой о скидке 25–30% в пятёрку не попадает.</li>
+        <li><b>Счёт.</b> Действует 5 рабочих дней. Если счёту больше — программа первым делом предлагает перевыставить, а не «ждать оплату».</li>
+        <li><b>Кто решает.</b> ЛПР — руководитель или владелец. Секретарь и завхоз не ЛПР, кроме бюджетного учреждения, где договор готовит завхоз. Сделка без контакта с ЛПР получает поправку к сроку денег.</li>
+        <li><b>Сроки.</b> Изготовление 10–14 рабочих дней после оплаты, доставка 2–5 дней. Деньги при предоплате приходят в момент оплаты, поэтому считаются эти 5 рабочих дней счёта, а не отгрузка.</li>
+      </ul>
+
+      <h3>Отсев и порядок</h3>
+      <ol>
+        <li><b>Вне игры.</b> Закрытые стадии, дубли одной сделки, «купили у конкурента», «оплата пришла 100%», «номер неверный, не отвечает».</li>
+        <li><b>Отложено.</b> Клиент сам просил вернуться позже, шаг назначен дальше 30 дней, контакта нет больше 30 дней.</li>
+        <li><b>Нужно решение руководителя.</b> Скидка больше 7%, отсрочка не госзаказчику.</li>
+        <li><b>Скорость денег.</b> Для каждой оставшейся сделки считается, через сколько дней придут деньги: действующий счёт — 3 дня, перевыставленный — 7, «выставляйте счёт» — 6, КП с нашей просрочкой — 9, согласование с даткой освоения бюджета — 12, КП без готовности — 18, новая заявка — 25–30. Госзаказчик добавляет 7 дней, отсутствие ЛПР — 5.</li>
+        <li><b>Баллы.</b> Скорость денег (12–90) + готовность клиента (+55) + барьер на нашей стороне (+35) + срок шага сегодня (+25) или просрочен (+18) + решение внутри клиента (+12) + свежая сделка с невыясненной потребностью (+10) + молчание 14–30 дней (+10) + сумма относительно плана (+8…+30). Штрафы: нет суммы −25, нет клиента −20.</li>
+        <li><b>Ограничения.</b> Не больше 2 сделок одного клиента. При равных баллах порядок фиксированный: скорость денег → сумма → номер сделки. Результат воспроизводим.</li>
+        <li><b>Что сделать сегодня.</b> Формулируется по правилам, а не переписывается из комментария. Если шага нет, он просрочен или противоречит стадии — программа пишет «Не уверен, что делать» и объясняет причину.</li>
+      </ol>
+    </div>
+  </details>
+
+</main>
+
+<footer class="foot">
+  <span>«Идеальный турник» · тестовое задание «Дожми сегодня»: CSV + дата → 5 сделок на сегодня</span>
+  <span class="foot-sep">·</span>
+  <span id="engine-note">движок правил v2.0</span>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

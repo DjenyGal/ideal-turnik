@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Идеальный турник — всё для спорта">
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4a515b"/>
+      <stop offset="0.45" stop-color="#2b3038"/>
+      <stop offset="1" stop-color="#1a1d23"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c9d2da"/>
+      <stop offset="0.5" stop-color="#8d98a3"/>
+      <stop offset="1" stop-color="#5b636d"/>
+    </linearGradient>
+    <linearGradient id="tape" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffd23f"/>
+      <stop offset="1" stop-color="#e8a81c"/>
+    </linearGradient>
+    <radialGradient id="bg" cx="0.3" cy="0.25" r="1">
+      <stop offset="0" stop-color="#2f3d52"/>
+      <stop offset="0.6" stop-color="#1d2530"/>
+      <stop offset="1" stop-color="#14171c"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <rect x="6" y="6" width="500" height="500" rx="92" fill="none" stroke="#4a90d9" stroke-opacity="0.35" stroke-width="3"/>
+
+  <!-- турник -->
+  <g stroke="url(#steel)" stroke-width="18" stroke-linecap="round" fill="none">
+    <path d="M96 150h320"/>
+    <path d="M120 150v96M392 150v96"/>
+  </g>
+
+  <!-- блины -->
+  <g>
+    <circle cx="196" cy="330" r="96" fill="url(#plate)"/>
+    <circle cx="196" cy="330" r="96" fill="none" stroke="#5b636d" stroke-width="5"/>
+    <circle cx="196" cy="330" r="58" fill="none" stroke="#6d7681" stroke-width="4" stroke-opacity="0.8"/>
+    <circle cx="196" cy="330" r="20" fill="#14171c" stroke="#8d98a3" stroke-width="6"/>
+    <circle cx="316" cy="330" r="72" fill="url(#plate)"/>
+    <circle cx="316" cy="330" r="72" fill="none" stroke="#5b636d" stroke-width="5"/>
+    <circle cx="316" cy="330" r="16" fill="#14171c" stroke="#8d98a3" stroke-width="5"/>
+  </g>
+
+  <!-- гриф -->
+  <rect x="120" y="318" width="290" height="24" rx="12" fill="url(#steel)"/>
+
+  <!-- сантиметровая лента -->
+  <path d="M300 402c46 22 96 6 118-34" fill="none" stroke="url(#tape)" stroke-width="22" stroke-linecap="round"/>
+  <g stroke="#8a5f00" stroke-width="4" stroke-linecap="round">
+    <path d="M318 407v-13M338 411v-13M358 411v-13M378 407v-13M396 399v-13"/>
+  </g>
+
+  <text x="256" y="112" text-anchor="middle" font-family="Oswald, 'Arial Narrow', Impact, sans-serif" font-size="60" font-weight="700" letter-spacing="2" fill="#eef2f6">ИДЕАЛЬНЫЙ</text>
+  <text x="256" y="112" text-anchor="middle" font-family="Oswald, 'Arial Narrow', Impact, sans-serif" font-size="60" font-weight="700" letter-spacing="2" fill="none"></text>
+  <text x="256" y="480" text-anchor="middle" font-family="Oswald, 'Arial Narrow', Impact, sans-serif" font-size="42" font-weight="600" letter-spacing="6" fill="#4a90d9">ТУРНИК</text>
+</svg>
